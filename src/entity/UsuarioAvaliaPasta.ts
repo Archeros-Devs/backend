@@ -1,9 +1,9 @@
-import { Column, Entity, Index, JoinColumn, ManyToOne } from "typeorm";
+import { BaseEntity, Column, CreateDateColumn, Entity, Index, JoinColumn, ManyToOne, UpdateDateColumn } from "typeorm";
 import Pasta  from "./Pasta";
 import Usuario from "./Usuario";
 
 @Entity("usuario_avalia_pasta")
-export default class UsuarioAvaliaPasta {
+export default class UsuarioAvaliaPasta extends BaseEntity {
   @Column("int", { primary: true })
   id_usuario: number;
 
@@ -11,9 +11,12 @@ export default class UsuarioAvaliaPasta {
   id_pasta: number;
 
   @Column("tinyint", { width: 1 })
-  avaliacao: boolean;
+  avaliacao: number;
 
-  @Column("timestamp", { default: () => "CURRENT_TIMESTAMP" })
+  @UpdateDateColumn()
+  atualizado_em: Date | null;
+
+  @CreateDateColumn()
   criado_em: Date;
 
   @ManyToOne(() => Pasta, (pasta) => pasta.avaliacoes)
@@ -23,4 +26,9 @@ export default class UsuarioAvaliaPasta {
   @ManyToOne(() => Usuario, (usuario) => usuario.avaliacoes)
   @JoinColumn([{ name: "id_usuario", referencedColumnName: "id_usuario" }])
   usuario: Usuario;
+
+  avaliar(avalicao: number){
+    this.avaliacao = avalicao
+    return this.save()
+  }
 }

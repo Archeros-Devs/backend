@@ -1,9 +1,11 @@
 import { Request, Response } from 'express'
-import jwt from 'jsonwebtoken'
-import argon2 from 'argon2'
-
+/*
+index, create, store, show, edit, update, destroy
+*/
 class UsuarioController {
-  
+  index(req: Request, res: Response): Promise<Response> {
+
+  }
 }
 
 export default new UsuarioController()

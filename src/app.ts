@@ -40,7 +40,7 @@ class App {
   }
 
   exceptionHandler() {
-    this.server.use(async (err, req: Request, res: Response) => {
+    this.server.use(async (err, req: Request, res: Response, next) => {
       if (err instanceof AppError) {
         return res.status(err.statusCode).json({ error: err.message });
       }

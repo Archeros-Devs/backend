@@ -1,4 +1,5 @@
 import {
+  BaseEntity,
   Column,
   Entity,
   Index,
@@ -9,7 +10,7 @@ import {
 import Usuario from "./Usuario";
 
 @Entity("endereco")
-export default class Endereco {
+export default class Endereco extends BaseEntity {
   @PrimaryGeneratedColumn({ type: "int", })
   id_endereco: number;
 

@@ -1,6 +1,8 @@
 import {
   BaseEntity,
   Column,
+  CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   Index,
   JoinColumn,
@@ -18,59 +20,127 @@ import Escolaridade from "./Escolaridade";
 import Profissoes from "./Profissoes";
 import UsuarioAvaliaPasta from "./UsuarioAvaliaPasta";
 import UsuarioSeguePasta from "./UsuarioSeguePasta";
+import cpfUtils from "../utils/cpfUtils";
+import { capitalize } from "src/utils/string";
+import argon2 from "argon2";
 
 @Entity("usuario")
 export default class Usuario extends BaseEntity {
   @PrimaryGeneratedColumn({ type: "int", name: "id_usuario" })
-  id_usuario: number;
+  private id_usuario: number;
+  getId() {
+    return this.id_usuario
+  }
 
   @Column("varchar", { name: "cpf", nullable: true, unique: true, length: 11 })
-  cpf: string | null;
+  private cpf: string | null;
+  getCpf() {
+    return cpfUtils.format(this.cpf)
+  }
+  setCpf(cpf: string) {
+    this.cpf = cpfUtils.strip(cpf)
+    return this
+  }
 
   @Column("varchar", { name: "nome", length: 150 })
-  nome: string;
+  private nome: string;
+  getNome() {
+    return this.nome
+  }
+  setNome(nome: string) {
+    this.nome = capitalize(nome, true)
+    return this
+  }
 
-  @Column("enum", { name: "sexo", nullable: true, enum: ["M", "F"] })
-  sexo: "M" | "F" | null;
+  @Column("enum", { name: "genero", nullable: true, enum: ["masculino", "feminino"] })
+  private genero: "masculino" | "feminino" | null;
+  getGenero() {
+    return this.genero
+  }
+  setGenero(genero: "masculino" | "feminino" | null) {
+    this.genero = genero
+    return this
+  }
 
   @Column("varchar", { name: "email", length: 255 })
-  email: string;
+  private email: string;
+  getEmail() {
+    return this.email
+  }
+  setEmail(email: string) {
+    this.email = email.toLowerCase()
+    return this
+  }
+
+  @Column("varchar", { length: 15 })
+  private telefone: string;
+  getTelefone() {
+    return this.telefone
+  }
+  setTelefone(telefone: string) {
+    this.telefone = telefone.replace(/\D/g, '')
+    return this
+  }
 
   @Column("int", { name: "id_profissao", default: () => "'0'" })
-  id_profissao: number;
+  private id_profissao: number;
+  getProfissao() {
+    return Profissoes.findOne(this.id_profissao)
+  }
+  setProfissao(profissao: Profissoes) {
+    this.id_profissao = profissao.getId()
+    return this
+  }
 
-  @Column("varchar", { name: "senha", length: 40 })
-  senha: string;
+  @Column("varchar", { name: "senha", length: 255, select: false })
+  private senha: string;
+  getSenha() {
+    return this.senha
+  }
+  async setSenha(senha: string): Promise<this> {
+    this.senha = await argon2.hash(senha);
+    return this
+  }
 
   @Column("varchar", { name: "url_img", nullable: true, length: 255 })
-  url_img: string | null;
+  private url_img: string | null;
+  getUrlImagem() {
+    return this.url_img
+  }
+  setUrlImagem(url: string) {
+    this.url_img = url
+    return this
+  }
 
   @Column("int", { name: "id_escolaridade", default: () => "'0'" })
-  id_escolaridade: number;
-
-  @Column("tinyint", {
-    name: "ativo",
-    nullable: true,
-    width: 1,
-    default: () => "'1'",
-  })
-  ativo: boolean | null;
+  private id_escolaridade: number;
+  getEscolaridade() {
+    return Escolaridade.findOne(this.id_escolaridade)
+  }
+  setEscolaridade(escolaridade: Escolaridade) {
+    this.id_escolaridade = escolaridade.getId()
+    return this
+  }
 
   @Column("int", {
     name: "tipo_usuario",
     comment: "0 = Normal, 1 = Admin, 2 = Super Admin",
     default: () => "'0'",
   })
-  tipo_usuario: number;
+  private tipo_usuario: number;
+  getTipo() {
+    return this.tipo_usuario
+  }
+  setTipo() {
+    this.tipo_usuario = 0
+    return this
+  }
 
-  @Column("timestamp", {
-    name: "criado_em",
-    default: () => "CURRENT_TIMESTAMP",
-  })
-  criado_em: Date;
+  @CreateDateColumn()
+  private criado_em: Date;
 
-  @Column("timestamp", { name: "deletado_em", nullable: true })
-  deletado_em: Date | null;
+  @DeleteDateColumn()
+  private deletado_em: Date | null;
 
   @OneToMany(() => Arquivos, (arquivos) => arquivos.usuario)
   arquivos: Arquivos[];
@@ -100,4 +170,9 @@ export default class Usuario extends BaseEntity {
 
   @OneToMany(() => UsuarioSeguePasta, (usuarioSeguePasta) => usuarioSeguePasta.usuario)
   seguindo: UsuarioSeguePasta[];
+
+  public save(): Promise<this> {
+
+    return super.save()
+  }
 }

@@ -1,9 +1,9 @@
-import { Column, Entity, Index, JoinColumn, ManyToOne } from "typeorm";
+import { BaseEntity, Column, CreateDateColumn, Entity, Index, JoinColumn, ManyToOne, UpdateDateColumn } from "typeorm";
 import Pasta  from "./Pasta";
 import Usuario from "./Usuario";
 
 @Entity("usuario_segue_pasta")
-export default class UsuarioSeguePasta {
+export default class UsuarioSeguePasta extends BaseEntity {
   @Column("int", { primary: true })
   id_pasta: number;
 
@@ -13,7 +13,10 @@ export default class UsuarioSeguePasta {
   @Column("tinyint", { width: 1, default: () => "'1'" })
   ativo: boolean;
 
-  @Column("timestamp", { default: () => "CURRENT_TIMESTAMP" })
+  @UpdateDateColumn()
+  atualizado_em: Date | null;
+  
+  @CreateDateColumn()
   criado_em: Date;
 
   @ManyToOne(() => Pasta, (pasta) => pasta.seguidores)

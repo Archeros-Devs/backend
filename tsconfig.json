@@ -17,6 +17,7 @@
     "baseUrl": ".",
     "paths": {
       "@controllers/*": ["./src/controllers/*"],
+      "@validators/*": ["./src/validators/*"],
       "@entity/*": ["./src/entity/*"],
       "@config/*": ["./src/config/*"],
       "@repository/*": ["./src/repository/*"],

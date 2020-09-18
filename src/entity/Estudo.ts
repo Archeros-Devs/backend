@@ -1,5 +1,8 @@
 import {
+  BaseEntity,
   Column,
+  CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   Index,
   JoinColumn,
@@ -10,7 +13,7 @@ import Pasta  from "./Pasta";
 import Usuario from "./Usuario";
 
 @Entity("estudo")
-export default class Estudo {
+export default class Estudo extends BaseEntity {
   @PrimaryGeneratedColumn({ type: "int", })
   id_mensagem: number;
 
@@ -29,10 +32,10 @@ export default class Estudo {
   @Column("varchar", { length: 255 })
   mensagem: string;
 
-  @Column("timestamp", { default: () => "CURRENT_TIMESTAMP" })
+  @CreateDateColumn()
   criado_em: Date;
 
-  @Column("timestamp", { nullable: true })
+  @DeleteDateColumn()
   deletado_em: Date | null;
 
   @ManyToOne(() => Pasta, (pasta) => pasta.estudos)

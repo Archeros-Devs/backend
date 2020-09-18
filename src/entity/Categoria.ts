@@ -1,4 +1,5 @@
 import {
+  BaseEntity,
   Column,
   Entity,
   JoinTable,
@@ -9,7 +10,7 @@ import Usuario from "./Usuario";
 import Pasta  from "./Pasta";
 
 @Entity("categoria")
-export default class Categoria {
+export default class Categoria extends BaseEntity {
   @PrimaryGeneratedColumn({ type: "int", name: "id_categoria" })
   id_categoria: number;
 
@@ -27,8 +28,8 @@ export default class Categoria {
   @ManyToMany(() => Pasta, (pasta) => pasta.categorias)
   @JoinTable({
     name: "pasta_categoria",
-    joinColumns: [{ name: "id_categoria", referencedColumnName: "idCategoria" }],
-    inverseJoinColumns: [{ name: "id_pasta", referencedColumnName: "idPasta" }]
+    joinColumns: [{ name: "id_categoria", referencedColumnName: "id_categoria" }],
+    inverseJoinColumns: [{ name: "id_pasta", referencedColumnName: "id_pasta" }]
   })
   pastas: Pasta[];
 }

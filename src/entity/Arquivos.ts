@@ -1,4 +1,5 @@
 import {
+  BaseEntity,
   Column,
   Entity,
   Index,
@@ -10,7 +11,7 @@ import Pasta  from "./Pasta";
 import Usuario from "./Usuario";
 
 @Entity("arquivos")
-export default class Arquivos {
+export default class Arquivos extends BaseEntity {
   @PrimaryGeneratedColumn({ type: "int" })
   id_arquivo: number;
 

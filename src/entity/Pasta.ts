@@ -1,6 +1,8 @@
 import {
   BaseEntity,
   Column,
+  CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   Index,
   JoinColumn,
@@ -36,10 +38,13 @@ export default class Pasta extends BaseEntity {
   @Column("varchar", { length: 300 })
   localizacao: string;
 
-  @Column("timestamp", { default: () => "CURRENT_TIMESTAMP" })
+  @Column("timestamp", { nullable: true })
+  homologada_em: Date | null
+
+  @CreateDateColumn()
   criado_em: Date;
 
-  @Column("timestamp", { nullable: true })
+  @DeleteDateColumn()
   deletado_em: Date | null;
 
   @OneToMany(() => Arquivos, (arquivos) => arquivos.pasta)
@@ -60,4 +65,6 @@ export default class Pasta extends BaseEntity {
 
   @OneToMany(() => UsuarioSeguePasta, (usuarioSeguePasta) => usuarioSeguePasta.pasta)
   seguidores: UsuarioSeguePasta[];
+
+  avaliacao: number
 }

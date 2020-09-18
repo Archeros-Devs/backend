@@ -1,10 +1,11 @@
-import { Column, Entity, OneToMany } from "typeorm";
+import { BaseEntity, Column, Entity, OneToMany } from "typeorm";
 import Usuario from "./Usuario";
 
 @Entity("escolaridade")
-export default class Escolaridade {
+export default class Escolaridade extends BaseEntity {
   @Column("int", { primary: true })
-  id_escolaridade: number;
+  private id_escolaridade: number;
+  getId() { return this.id_escolaridade }
 
   @Column("varchar", { length: 100 })
   escolaridade: string;
