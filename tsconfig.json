@@ -21,7 +21,8 @@
       "@entity/*": ["./src/entity/*"],
       "@config/*": ["./src/config/*"],
       "@repository/*": ["./src/repository/*"],
-      "@service/*": ["./src/service/*"]
-    }
+      "@service/*": ["./src/service/*"],
+      "@errors/*": ["./src/errors/*"]
+    },
   }
 }

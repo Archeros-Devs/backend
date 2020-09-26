@@ -5,7 +5,7 @@
   "author": "",
   "license": "MIT",
   "scripts": {
-    "deploy": "node -r ts-node/register/transpile-only -r tsconfig-paths/register dist/src/server.js",
+    "deploy": "node -r ts-node/register/transpile-only -r tsconfig-paths/register ./dist/src/server.js",
     "dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules --no-notify src/server.ts",
     "test": "jest"
   }, 

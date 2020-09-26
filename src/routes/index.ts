@@ -9,6 +9,7 @@ import UsuarioValidator from '@validators/UsuarioValidator'
 const upload = multer(multerConfig);
 const router = Router();
 
+router.get('/', (req, res) => res.status(200).send('OK'))
 router.post('/login', AuthController.login);
 router.post('/cadastro', UsuarioValidator.cadastro, AuthController.cadastro);
 
