@@ -44,13 +44,15 @@ class App {
       if (err instanceof AppError) {
         return res.status(err.statusCode).json({ error: err.message });
       }
-      
+
+
       const errors = await new Youch(err, req).toHTML();
       const { NODE_ENV } = process.env
-      if (NODE_ENV === 'develop' || NODE_ENV === 'test')
+      if (NODE_ENV === 'develop' || NODE_ENV === 'test') {
         res.writeHead(200, { 'content-type': 'text/html' }).write(errors)
-      else 
-        res.status(500).json({ error: 'Erro interno do servidor', errors });
+        return res.end()
+      }
+      return res.status(500).json({ error: 'Erro interno do servidor', errors });
     });
   }
 }

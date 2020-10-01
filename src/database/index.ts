@@ -9,8 +9,8 @@ class Database {
       password: process.env.RDS_PASSWORD || "",
       port: parseInt(process.env.RDS_PORT) || 3306,
       database: "peruibemelhor",
-      synchronize: false,
-      logging: !process.env.RDS_HOSTNAME,
+      synchronize: true,
+      logging: process.env.NODE_ENV != 'production',
       entities: [
         "src/entity/**/*.ts"
       ],

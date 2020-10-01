@@ -13,9 +13,9 @@ declare global {
 
 const decrypt = (bearerToken: string): Promise<Usuario> => {
   const { ACCESS_TOKEN_SECRET } = process.env
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     jwt.verify(bearerToken, ACCESS_TOKEN_SECRET, async (error, payload: Usuario) => {
-      if (error) throw new AppError(401, 'Falha ao verificar token')
+      if (error) reject(new AppError(401, 'Falha ao verificar token'))
       resolve(payload)
     });
   })
