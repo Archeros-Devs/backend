@@ -77,7 +77,7 @@ const generate = (formatted?: boolean): string => {
   return formatted ? format(numbers) : numbers;
 };
 
-export default {
+export {
   verifierDigit,
   strip,
   format,

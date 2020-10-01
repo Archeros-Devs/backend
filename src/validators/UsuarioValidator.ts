@@ -1,5 +1,5 @@
 import AppError from '../errors/AppError';
-import cpfUtils from '../utils/cpfUtils'
+import { isValid } from '../utils/cpf'
 import { object, number, string } from 'yup'
 import '@config/yup.locale.pt-br'
 
@@ -9,7 +9,7 @@ class UsuarioValidator {
     const schema = object().shape({
       cpf: string()
         .label('CPF')
-        .test('CPF', 'CPF inválido', () => cpfUtils.isValid(cpf))
+        .test('CPF', 'CPF inválido', () => isValid(cpf))
         .required(),
       nome: string()
         .label('Nome')

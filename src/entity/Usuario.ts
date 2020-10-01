@@ -20,127 +20,51 @@ import Escolaridade from "./Escolaridade";
 import Profissoes from "./Profissoes";
 import UsuarioAvaliaPasta from "./UsuarioAvaliaPasta";
 import UsuarioSeguePasta from "./UsuarioSeguePasta";
-import cpfUtils from "../utils/cpfUtils";
-import { capitalize } from "src/utils/string";
-import argon2 from "argon2";
-
 @Entity("usuario")
 export default class Usuario extends BaseEntity {
   @PrimaryGeneratedColumn({ type: "int", name: "id_usuario" })
-  private id_usuario: number;
-  getId() {
-    return this.id_usuario
-  }
+  id_usuario: number;
 
   @Column("varchar", { name: "cpf", nullable: true, unique: true, length: 11 })
-  private cpf: string | null;
-  getCpf() {
-    return cpfUtils.format(this.cpf)
-  }
-  setCpf(cpf: string) {
-    this.cpf = cpfUtils.strip(cpf)
-    return this
-  }
+  cpf: string | null;
 
   @Column("varchar", { name: "nome", length: 150 })
-  private nome: string;
-  getNome() {
-    return this.nome
-  }
-  setNome(nome: string) {
-    this.nome = capitalize(nome, true)
-    return this
-  }
+  nome: string;
 
   @Column("enum", { name: "genero", nullable: true, enum: ["masculino", "feminino"] })
-  private genero: "masculino" | "feminino" | null;
-  getGenero() {
-    return this.genero
-  }
-  setGenero(genero: "masculino" | "feminino" | null) {
-    this.genero = genero
-    return this
-  }
+  genero: "masculino" | "feminino" | null;
 
   @Column("varchar", { name: "email", length: 255 })
-  private email: string;
-  getEmail() {
-    return this.email
-  }
-  setEmail(email: string) {
-    this.email = email.toLowerCase()
-    return this
-  }
+  email: string;
 
   @Column("varchar", { length: 15 })
-  private telefone: string;
-  getTelefone() {
-    return this.telefone
-  }
-  setTelefone(telefone: string) {
-    this.telefone = telefone.replace(/\D/g, '')
-    return this
-  }
+  telefone: string;
 
   @Column("int", { name: "id_profissao", default: () => "'0'" })
-  private id_profissao: number;
-  getProfissao() {
-    return Profissoes.findOne(this.id_profissao)
-  }
-  setProfissao(profissao: Profissoes) {
-    this.id_profissao = profissao.getId()
-    return this
-  }
+  id_profissao: number;
 
   @Column("varchar", { name: "senha", length: 255, select: false })
-  private senha: string;
-  getSenha() {
-    return this.senha
-  }
-  async setSenha(senha: string): Promise<this> {
-    this.senha = await argon2.hash(senha);
-    return this
-  }
+  senha: string;
 
   @Column("varchar", { name: "url_img", nullable: true, length: 255 })
-  private url_img: string | null;
-  getUrlImagem() {
-    return this.url_img
-  }
-  setUrlImagem(url: string) {
-    this.url_img = url
-    return this
-  }
+  url_img: string | null;
 
   @Column("int", { name: "id_escolaridade", default: () => "'0'" })
-  private id_escolaridade: number;
-  getEscolaridade() {
-    return Escolaridade.findOne(this.id_escolaridade)
-  }
-  setEscolaridade(escolaridade: Escolaridade) {
-    this.id_escolaridade = escolaridade.getId()
-    return this
-  }
+  id_escolaridade: number;
 
   @Column("int", {
     name: "tipo_usuario",
     comment: "0 = Normal, 1 = Admin, 2 = Super Admin",
     default: () => "'0'",
   })
-  private tipo_usuario: number;
-  getTipo() {
-    return this.tipo_usuario
-  }
-  setTipo() {
-    this.tipo_usuario = 0
-    return this
-  }
+  tipo_usuario: number;
+
 
   @CreateDateColumn()
-  private criado_em: Date;
+  criado_em: Date;
 
   @DeleteDateColumn()
-  private deletado_em: Date | null;
+  deletado_em: Date | null;
 
   @OneToMany(() => Arquivos, (arquivos) => arquivos.usuario)
   arquivos: Arquivos[];
@@ -170,9 +94,4 @@ export default class Usuario extends BaseEntity {
 
   @OneToMany(() => UsuarioSeguePasta, (usuarioSeguePasta) => usuarioSeguePasta.usuario)
   seguindo: UsuarioSeguePasta[];
-
-  public save(): Promise<this> {
-
-    return super.save()
-  }
 }
