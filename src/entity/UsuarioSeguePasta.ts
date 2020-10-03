@@ -10,9 +10,6 @@ export default class UsuarioSeguePasta extends BaseEntity {
   @Column("int", { primary: true })
   id_usuario: number;
 
-  @Column("tinyint", { width: 1, default: () => "'1'" })
-  ativo: boolean;
-
   @UpdateDateColumn()
   atualizado_em: Date | null;
   

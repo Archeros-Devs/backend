@@ -5,9 +5,7 @@ import Usuario from "./Usuario";
 export default class Profissoes extends BaseEntity {
   @PrimaryGeneratedColumn({ type: "int" })
   private id_profissao: number;
-  getId(){
-    return this.id_profissao
-  }
+  getId() { return this.id_profissao }
 
   @Column("tinytext")
   nome: string;

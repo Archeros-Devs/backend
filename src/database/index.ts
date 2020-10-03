@@ -1,7 +1,7 @@
 import { createConnection, Connection } from "typeorm";
 
 class Database {
-  async MySQL(database = 'default'): Promise<Connection> {
+  async MySQL(): Promise<Connection> {
     return createConnection({
       type: "mysql",
       host: process.env.RDS_HOSTNAME || "localhost",
