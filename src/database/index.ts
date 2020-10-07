@@ -12,13 +12,13 @@ class Database {
       synchronize: false,
       logging: process.env.NODE_ENV != 'production',
       entities: [
-        "src/entity/**/*.ts"
+        "src/entity/**/*{.ts,.js}"
       ],
       migrations: [
-        "src/database/migration/**/*.ts"
+        "src/database/migration/**/*{.ts,.js}"
       ],
       subscribers: [
-        "src/subscriber/**/*.ts"
+        "src/subscriber/**/*{.ts,.js}"
       ]
     });
   }
