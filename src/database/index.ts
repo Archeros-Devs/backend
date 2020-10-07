@@ -8,7 +8,7 @@ class Database {
       username: process.env.RDS_USERNAME || "root",
       password: process.env.RDS_PASSWORD || "",
       port: parseInt(process.env.RDS_PORT) || 3306,
-      database: process.env.RDS_HOSTNAME || "peruibemelhor",
+      database: process.env.RDS_DB_NAME || "peruibemelhor",
       synchronize: false,
       logging: process.env.NODE_ENV != 'production',
       entities: [
