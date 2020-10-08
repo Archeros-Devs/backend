@@ -4,6 +4,7 @@ import Pasta from '@entity/Pasta'
 import UsuarioAvaliaPasta from '@entity/UsuarioAvaliaPasta'
 import Usuario from '@entity/Usuario'
 import Categoria from '@entity/Categoria'
+import UsuarioSeguePasta from './../entity/UsuarioSeguePasta';
 // index, create, store, show, edit, update, destroy
 
 class UsuarioController {
@@ -26,20 +27,6 @@ class UsuarioController {
     return res.status(200).json({ pasta, imgs: [] })
   }
 
-  async avaliar(req: Request, res: Response): Promise<Response> {
-    const usuario = req.user
-    const id_pasta = parseInt(req.params.id_pasta)
-    const { avaliacao } = req.body
-
-    const pasta = await Pasta.findOne(id_pasta, { relations: ['avaliacoes'] })
-    if (!pasta) return res.status(404).json({ error: 'Pasta não encontrada' })
-
-    const voto = await UsuarioAvaliaPasta.avaliar(usuario, pasta, avaliacao)
-
-    if (usuario.tipo_usuario > 0) await pasta.verificarHomologacao()
-    return res.status(200).json(voto)
-  }
-
   async store(req: Request, res: Response): Promise<Response> {
     const usuario = req.user
     const { nome, descricao, discussao, localizacao, categorias } = req.body
@@ -54,6 +41,33 @@ class UsuarioController {
     await pasta.save()
 
     return res.status(200).json(pasta)
+  }
+
+  async seguir(req: Request, res: Response): Promise<Response> {
+    const usuario = req.user
+    const id_pasta = parseInt(req.params.id_pasta)
+
+    const pasta = await Pasta.findOne(id_pasta, { relations: ['avaliacoes'] })
+    if (!pasta) return res.status(404).json({ error: 'Pasta não encontrada' })
+
+    const sequindo = await UsuarioSeguePasta.seguir(usuario, pasta)
+
+
+    return res.status(200).json({})
+  }
+
+  async avaliar(req: Request, res: Response): Promise<Response> {
+    const usuario = req.user
+    const id_pasta = parseInt(req.params.id_pasta)
+    const { avaliacao } = req.body
+
+    const pasta = await Pasta.findOne(id_pasta, { relations: ['avaliacoes'] })
+    if (!pasta) return res.status(404).json({ error: 'Pasta não encontrada' })
+
+    const voto = await UsuarioAvaliaPasta.avaliar(usuario, pasta, avaliacao)
+
+    if (usuario.tipo_usuario > 0) await pasta.verificarHomologacao()
+    return res.status(200).json(voto)
   }
 }
 

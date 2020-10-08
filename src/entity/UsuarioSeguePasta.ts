@@ -9,6 +9,9 @@ export default class UsuarioSeguePasta extends BaseEntity {
 
   @Column("int", { primary: true })
   id_usuario: number;
+  
+  @CreateDateColumn()
+  deletado_em: Date | null;
 
   @UpdateDateColumn()
   atualizado_em: Date | null;
@@ -23,4 +26,19 @@ export default class UsuarioSeguePasta extends BaseEntity {
   @ManyToOne(() => Usuario, (usuario) => usuario.avaliacoes)
   @JoinColumn([{ name: "id_usuario", referencedColumnName: "id_usuario" }])
   usuario: Usuario;
+
+  static async seguir(usuario: Usuario, pasta: Pasta){
+    const id_usuario = usuario.id_usuario
+    const id_pasta = pasta.id_pasta
+
+    const seguindo = await this.findOne({ id_usuario, id_pasta })
+    if (seguindo) {
+      return seguindo.remove()
+    }
+
+    const seguir = new UsuarioSeguePasta()
+    seguir.id_usuario = id_usuario
+    seguir.id_pasta = id_pasta
+    return seguir.save()
+  }
 }
