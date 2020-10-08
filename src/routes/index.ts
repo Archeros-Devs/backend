@@ -7,6 +7,7 @@ import AuthController from '@controllers/AuthController'
 import UsuarioValidator from '@validators/UsuarioValidator'
 import ProfissoesController from '@controllers/ProfissoesController'
 import CategoriasController from '@controllers/CategoriasController';
+import EscolaridadesController from '@controllers/EscolaridadesController';
 import PastaController from '@controllers/PastaController';
 import PastaValidators from '@validators/PastaValidators';
 import AdministradoresController from '@controllers/AdministradoresController';
@@ -21,6 +22,7 @@ router.post('/cadastro', UsuarioValidator.cadastro, AuthController.cadastro);
 
 router.get('/profissoes', ProfissoesController.index);
 router.get('/categorias', CategoriasController.index);
+router.get('/escolaridades', EscolaridadesController.index);
 
 router.get('/usuarios', authAdmin, UsuarioController.index);
 router.get('/administradores', authAdmin, AdministradoresController.index);
