@@ -23,7 +23,12 @@ class UsuarioController {
 
   async show(req: Request, res: Response): Promise<Response> {
     const { id_pasta } = req.params
+    const { id_usuario } = req.user
+
     const pasta = await Pasta.findOne(id_pasta, { relations: ['usuario'] })
+    const voto = await UsuarioAvaliaPasta.findOne({ id_usuario, id_pasta: pasta.id_pasta })
+    pasta.avaliacao = voto ? voto.avaliacao : null
+
     return res.status(200).json({ pasta, imgs: [] })
   }
 

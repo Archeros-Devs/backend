@@ -45,7 +45,6 @@ class App {
         return res.status(err.statusCode).json({ error: err.message });
       }
 
-
       const errors = await new Youch(err, req).toHTML();
       const { NODE_ENV } = process.env
       if (NODE_ENV === 'develop' || NODE_ENV === 'test') {

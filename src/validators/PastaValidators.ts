@@ -6,6 +6,7 @@ class PastaValidators {
   async avaliacao(req, res, next) {
     const body = object().shape({
       avaliacao: number()
+        .label('Avaliação')
         .min(-1)
         .max(1)
         .required()
@@ -20,18 +21,23 @@ class PastaValidators {
   async criar(req, res, next) {
     const body = object().shape({
       nome: string()
+        .label('Nome')
         .max(150)
         .required(),
       descricao: string()
+        .label('Descrição')
         .max(300)
         .required(),
       discussao: string()
+        .label('Discussão')
         .max(255)
         .required(),
       localizacao: string()
+        .label('Localização')
         .max(300)
-        .required(),
+        .notRequired(),
       categorias: array()
+        .label('Categorias')
         .of(number()
           .min(1))
         .required()
