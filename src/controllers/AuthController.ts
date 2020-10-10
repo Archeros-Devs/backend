@@ -30,31 +30,6 @@ class AuthController {
 
     return res.status(200).json({ name: usuario.nome, email: usuario.email, img: '', token: accessToken })
   }
-
-  async cadastro(req: Request, res: Response): Promise<Response> {
-    const { cpf, nome, email, id_profissao, senha, id_escolaridade } = req.body
-
-    const buscarUsuario = await Usuario.find({ where: [{ cpf }, { email }] })
-    if (buscarUsuario) throw new AppError(400, 'CPF ou Email já cadastrado')
-
-    const profissao = await Profissoes.findOne(id_profissao)
-    if (!profissao) throw new AppError(404, 'Profissão não encontrada')
-
-    const escolaridade = await Escolaridade.findOne(id_escolaridade)
-    if (!escolaridade) throw new AppError(404, 'Escolaridade inválida')
-
-    const usuario = new Usuario()
-    usuario.cpf = strip(cpf)
-    usuario.nome = nome
-    usuario.email = email
-    usuario.profissao = profissao
-    usuario.escolaridade = escolaridade
-    usuario.senha = await argon2.hash(senha)
-
-    await usuario.save()
-
-    return res.status(200).json(usuario)
-  }
 }
 
 export default new AuthController()

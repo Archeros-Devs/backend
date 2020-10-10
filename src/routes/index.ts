@@ -18,7 +18,7 @@ const router = Router();
 
 router.get('/', (req, res) => res.status(200).send('OK'))
 router.post('/login', AuthController.login);
-router.post('/cadastro', UsuarioValidator.cadastro, AuthController.cadastro);
+router.post('/cadastro', UsuarioValidator.cadastro, UsuarioController.create);
 
 router.get('/profissoes', ProfissoesController.index);
 router.get('/categorias', CategoriasController.index);
