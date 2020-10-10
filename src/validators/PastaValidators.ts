@@ -11,9 +11,10 @@ class PastaValidators {
         .required()
     })
 
-    body.validate(req.body, { abortEarly: false })
-      .catch((e) => { throw new AppError(400, e) })
-      .then(() => next())
+    await body.validate(req.body, { abortEarly: false })
+      .catch((e) => { throw new AppError(400, e) });
+
+    return next()
   }
 
   async criar(req, res, next) {
@@ -36,9 +37,10 @@ class PastaValidators {
         .required()
     })
 
-    body.validate(req.body, { abortEarly: false })
-      .catch((e) => { throw new AppError(400, e) })
-      .then(() => next())
+    await body.validate(req.body, { abortEarly: false })
+      .catch((e) => { throw new AppError(400, e) });
+
+    return next()
   }
 }
 
