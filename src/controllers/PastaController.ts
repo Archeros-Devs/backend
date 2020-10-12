@@ -57,8 +57,7 @@ class UsuarioController {
 
     const sequindo = await UsuarioSeguePasta.seguir(usuario, pasta)
 
-
-    return res.status(200).json({})
+    return res.status(200).json(sequindo)
   }
 
   async avaliar(req: Request, res: Response): Promise<Response> {

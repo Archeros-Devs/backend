@@ -21,7 +21,7 @@ class UsuarioController {
     const { cpf, nome, genero, email, id_profissao, senha, id_escolaridade } = req.body
 
     const buscarUsuario = await Usuario.find({ where: [{ cpf }, { email }] })
-    if (buscarUsuario) throw new AppError(400, 'CPF ou Email já cadastrado')
+    if (!buscarUsuario) throw new AppError(400, 'CPF ou Email já cadastrado')
 
     const profissao = await Profissoes.findOne(id_profissao)
     if (!profissao) throw new AppError(404, 'Profissão não encontrada')
