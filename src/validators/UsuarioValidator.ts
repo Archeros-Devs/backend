@@ -41,7 +41,6 @@ class UsuarioValidator {
         .label('Escolaridade')
         .positive()
         .integer()
-        .max(2)
         .required(),
     });
 
