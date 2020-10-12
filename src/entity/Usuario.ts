@@ -59,7 +59,6 @@ export default class Usuario extends BaseEntity {
   })
   tipo_usuario: number;
 
-
   @CreateDateColumn()
   criado_em: Date;
 
