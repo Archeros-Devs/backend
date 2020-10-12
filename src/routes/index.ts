@@ -18,12 +18,12 @@ const router = Router();
 
 router.get('/', (req, res) => res.status(200).send('OK'))
 router.post('/login', AuthController.login);
-router.post('/cadastro', UsuarioValidator.cadastro, UsuarioController.create);
 
 router.get('/profissoes', ProfissoesController.index);
 router.get('/categorias', CategoriasController.index);
 router.get('/escolaridades', EscolaridadesController.index);
 
+router.post('/usuarios', UsuarioValidator.cadastro, UsuarioController.create);
 router.get('/usuarios', authAdmin, UsuarioController.index);
 router.get('/administradores', authAdmin, AdministradoresController.index);
 
