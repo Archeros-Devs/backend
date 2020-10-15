@@ -35,7 +35,8 @@ class UsuarioController {
   }
 
   async store(req: Request, res: Response): Promise<Response> {
-    const usuario = req.user
+    //const usuario = req.user
+    const usuario = await Usuario.findOne(2)
     const { nome, descricao, discussao, localizacao, categorias } = req.body
     const pasta = new Pasta()
 
