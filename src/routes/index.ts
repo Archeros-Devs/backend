@@ -25,6 +25,7 @@ router.get('/escolaridades', EscolaridadesController.index);
 
 router.post('/usuarios', UsuarioValidator.cadastro, UsuarioController.create);
 router.get('/usuarios', authAdmin, UsuarioController.index);
+router.get('/usuario/perfil',authUser,UsuarioController.show)
 router.get('/administradores', authAdmin, AdministradoresController.index);
 
 router.get('/pastas', authUser, PastaController.index);

@@ -4,6 +4,7 @@ import AppError from '@errors/AppError'
 import Usuario from '@entity/Usuario'
 import Profissoes from '@entity/Profissoes'
 import Escolaridade from '@entity/Escolaridade'
+import Endereco from '@entity/Endereco'
 import { strip as removerMascaraCpf } from '../utils/cpf'
 import argon2 from 'argon2'
 /* index, create, store, show, edit, update, destroy */
@@ -40,6 +41,13 @@ class UsuarioController {
 
     await usuario.save()
 
+    return res.status(200).json(usuario)
+  }
+  async show(req: Request, res: Response): Promise<Response>{
+    const { id_usuario } = req.user
+    const usuario = await Usuario.findOne(id_usuario,{
+      relations: ['endereco', 'profissao', 'escolaridade', 'segundindo', 'pastas']
+    })
     return res.status(200).json(usuario)
   }
 }
