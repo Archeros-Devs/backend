@@ -43,10 +43,14 @@ class UsuarioController {
 
     return res.status(200).json(usuario)
   }
-  async show(req: Request, res: Response): Promise<Response>{
-    const { id_usuario } = req.user
-    const usuario = await Usuario.findOne(id_usuario,{
-      relations: ['endereco', 'profissao', 'escolaridade', 'segundindo', 'pastas']
+  async show(req: Request, res: Response): Promise<Response> {
+    let { id_usuario } = req.params
+    if (req.user.tipo_usuario == 0) {
+      id_usuario = req.user.id_usuario.toString()
+    }
+
+    const usuario = await Usuario.findOne(id_usuario, {
+      relations: ['enderecos', 'profissao', 'escolaridade', 'seguindo', 'pastas']
     })
     return res.status(200).json(usuario)
   }
