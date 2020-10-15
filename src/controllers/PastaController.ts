@@ -14,8 +14,10 @@ class UsuarioController {
 
     const [pastas, total] = await PastaRepository.pastas(page, limit, homologada)
     for await (const pasta of pastas) {
-      const voto = await UsuarioAvaliaPasta.findOne({ id_usuario, id_pasta: pasta.id_pasta })
-      pasta.avaliacao = voto ? voto.avaliacao : null
+      if (id_usuario) {
+        const voto = await UsuarioAvaliaPasta.findOne({ id_usuario, id_pasta: pasta.id_pasta })
+        pasta.avaliacao = voto ? voto.avaliacao : null
+      } else pasta.avaliacao = null
     }
 
     return res.status(200).json({ pastas, total })
