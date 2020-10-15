@@ -21,7 +21,7 @@ class UsuarioController {
   async create(req: Request, res: Response): Promise<Response> {
     const { cpf, nome, genero, email, id_profissao, senha, id_escolaridade } = req.body
 
-    const buscarUsuario = await Usuario.find({ where: [{ cpf }, { email }] })
+    const buscarUsuario = await Usuario.findOne({ where: [{ cpf }, { email }] })
     if (buscarUsuario) throw new AppError(400, 'CPF ou Email já cadastrado')
 
     const profissao = await Profissoes.findOne(id_profissao)
