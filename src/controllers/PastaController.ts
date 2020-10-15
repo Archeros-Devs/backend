@@ -10,7 +10,7 @@ import UsuarioSeguePasta from './../entity/UsuarioSeguePasta';
 class UsuarioController {
   async index(req: Request, res: Response): Promise<Response> {
     const { page = 1, limit = 10, homologada } = req.query
-    const id_usuario = req?.user?.usuario
+    const id_usuario = req.user ? req.user.id_usuario : false
 
     const [pastas, total] = await PastaRepository.pastas(page, limit, homologada)
     for await (const pasta of pastas) {
