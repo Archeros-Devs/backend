@@ -66,12 +66,12 @@ class UsuarioController {
   async avaliar(req: Request, res: Response): Promise<Response> {
     const usuario = req.user
     const id_pasta = parseInt(req.params.id_pasta)
-    const { avaliacao } = req.body
+    const { avaliacao, motivo } = req.body
 
     const pasta = await Pasta.findOne(id_pasta, { relations: ['avaliacoes'] })
     if (!pasta) return res.status(404).json({ error: 'Pasta não encontrada' })
 
-    const voto = await UsuarioAvaliaPasta.avaliar(usuario, pasta, avaliacao)
+    const voto = await UsuarioAvaliaPasta.avaliar(usuario, pasta, avaliacao, motivo)
 
     if (usuario.tipo_usuario > 0) await pasta.verificarHomologacao()
     return res.status(200).json(voto)
