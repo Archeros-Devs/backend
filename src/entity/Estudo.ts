@@ -9,8 +9,10 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import Pasta  from "./Pasta";
+import Pasta from "./Pasta";
 import Usuario from "./Usuario";
+import Piii from 'piii'
+import piiiFilters from 'piii-filters'
 
 @Entity("estudo")
 export default class Estudo extends BaseEntity {
@@ -45,4 +47,17 @@ export default class Estudo extends BaseEntity {
   @ManyToOne(() => Usuario, (usuario) => usuario.estudos)
   @JoinColumn([{ name: "id_usuario", referencedColumnName: "id_usuario" }])
   usuario: Usuario;
+
+  public piii() {
+    const piii = new Piii({
+      filters: [
+        ...Object.values(piiiFilters)
+      ],
+      censor: badWord => {
+        return badWord.charAt(0) + "*".repeat(badWord.length - 1)
+      }
+    });
+
+    this.mensagem = piii.filter(this.mensagem)
+  }
 }

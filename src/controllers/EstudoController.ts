@@ -30,6 +30,8 @@ class EstudoController {
     estudo.pasta = pasta
     estudo.mensagem = mensagem
     estudo.tipo = TIPO_ESTUDO
+    
+    estudo.piii()
     await estudo.save()
 
     return res.status(200).json(estudo)
