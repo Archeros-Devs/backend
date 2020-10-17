@@ -12,6 +12,8 @@ import PastaController from '@controllers/PastaController';
 import PastaValidators from '@validators/PastaValidators';
 import AdministradoresController from '@controllers/AdministradoresController';
 import UsuarioController from '@controllers/UsuarioController';
+import EstudoController from '@controllers/EstudoController';
+import EstudoValidators from '@validators/EstudoValidators';
 
 const upload = multer(multerConfig);
 const router = Router();
@@ -33,6 +35,9 @@ router.post('/pastas', PastaValidators.criar, PastaController.store);
 router.get('/pastas/:id_pasta', authUser, PastaController.show);
 router.put('/pastas/:id_pasta/avaliar', authUser, PastaValidators.avaliacao, PastaController.avaliar);
 router.put('/pastas/:id_pasta/seguir', authUser, PastaController.seguir);
+
+router.get('/pastas/:id_pasta/mensagens', authUser, EstudoController.index);
+router.post('/pastas/:id_pasta/mensagens', authUser, EstudoValidators.store, EstudoController.store);
 
 
 export default router;
