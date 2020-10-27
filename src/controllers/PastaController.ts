@@ -10,14 +10,12 @@ import UsuarioSeguePasta from './../entity/UsuarioSeguePasta';
 class UsuarioController {
   async index(req: Request, res: Response): Promise<Response> {
     const { page = 1, limit = 10, homologada } = req.query
-    const id_usuario = req.user ? req.user.id_usuario : false
+    const id_usuario = req.user.id_usuario
 
     const [pastas, total] = await PastaRepository.pastas(page, limit, homologada)
     for await (const pasta of pastas) {
-      if (id_usuario) {
-        const voto = await UsuarioAvaliaPasta.findOne({ id_usuario, id_pasta: pasta.id_pasta })
-        pasta.avaliacao = voto ? voto.avaliacao : null
-      } else pasta.avaliacao = null
+      const voto = await UsuarioAvaliaPasta.findOne({ id_usuario, id_pasta: pasta.id_pasta })
+      pasta.avaliacao = voto ? voto.avaliacao : null
     }
 
     return res.status(200).json({ pastas, total })
@@ -35,8 +33,7 @@ class UsuarioController {
   }
 
   async store(req: Request, res: Response): Promise<Response> {
-    //const usuario = req.user
-    const usuario = await Usuario.findOne(2)
+    const usuario = req.user
     const { nome, descricao, discussao, localizacao, categorias } = req.body
     const pasta = new Pasta()
 

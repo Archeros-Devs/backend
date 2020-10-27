@@ -30,8 +30,8 @@ router.get('/usuarios', authAdmin, UsuarioController.index);
 router.get('/usuarios/:id_usuario', authUser, UsuarioController.show)
 router.get('/administradores', authAdmin, AdministradoresController.index);
 
-router.get('/pastas', PastaController.index);
-router.post('/pastas', PastaValidators.criar, PastaController.store);
+router.get('/pastas', authUser, PastaController.index);
+router.post('/pastas', authUser, PastaValidators.criar, PastaController.store);
 router.get('/pastas/:id_pasta', authUser, PastaController.show);
 router.put('/pastas/:id_pasta/avaliar', authUser, PastaValidators.avaliacao, PastaController.avaliar);
 router.put('/pastas/:id_pasta/seguir', authUser, PastaController.seguir);
