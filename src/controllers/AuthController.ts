@@ -28,7 +28,7 @@ class AuthController {
       expiresIn: '24h'
     })
 
-    return res.status(200).json({ name: usuario.nome, email: usuario.email, img: '', token: accessToken })
+    return res.status(200).json({ ...usuario, img: '', token: accessToken })
   }
 }
 
