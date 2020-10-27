@@ -40,7 +40,7 @@ class PastaValidators {
         .label('Categorias')
         .of(number()
           .min(1))
-        .required()
+        .notRequired()
     })
 
     await body.validate(req.body, { abortEarly: false })
