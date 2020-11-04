@@ -24,6 +24,9 @@ export default class Estudo extends BaseEntity {
 
   @Column("int")
   id_pasta: number;
+  
+  @Column("varchar", { length: 36, nullable: true })
+  id_origem: string | null;
 
   @Column("tinyint", {
     comment: "1 = estudo; 2 = analise tecnica",

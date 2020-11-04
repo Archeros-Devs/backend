@@ -29,6 +29,9 @@ export default class Pasta extends BaseEntity {
   @Column("int")
   id_usuario: number;
 
+  @Column("varchar", { length: 36, nullable: true })
+  id_origem: string | null;
+
   @Column("varchar", { length: 150 })
   nome: string;
 
