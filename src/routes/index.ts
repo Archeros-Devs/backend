@@ -36,8 +36,8 @@ router.get('/pastas/:id_pasta', authUser, PastaController.show);
 router.put('/pastas/:id_pasta/avaliar', authUser, PastaValidators.avaliacao, PastaController.avaliar);
 router.put('/pastas/:id_pasta/seguir', authUser, PastaController.seguir);
 
-router.get('/pastas/:id_pasta/mensagens', authUser, EstudoController.index);
-router.post('/pastas/:id_pasta/mensagens', authUser, EstudoValidators.store, EstudoController.store);
+router.get('/pastas/:id_pasta/estudos', authUser, EstudoController.index);
+router.post('/pastas/:id_pasta/estudos', authUser, EstudoValidators.store, EstudoController.store);
 
 
 export default router;

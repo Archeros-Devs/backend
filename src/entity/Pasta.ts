@@ -9,6 +9,7 @@ import {
   ManyToMany,
   ManyToOne,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
 import Arquivos from "./Arquivos";
@@ -69,8 +70,6 @@ export default class Pasta extends BaseEntity {
 
   @OneToMany(() => UsuarioSeguePasta, (usuarioSeguePasta) => usuarioSeguePasta.pasta)
   seguidores: UsuarioSeguePasta[];
-
-  avaliacao: number
   
   async verificarHomologacao() {
     const [_, total] = await UsuarioRepository.findAllAdmins()

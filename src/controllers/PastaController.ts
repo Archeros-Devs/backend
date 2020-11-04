@@ -5,31 +5,37 @@ import UsuarioAvaliaPasta from '@entity/UsuarioAvaliaPasta'
 import Usuario from '@entity/Usuario'
 import Categoria from '@entity/Categoria'
 import UsuarioSeguePasta from './../entity/UsuarioSeguePasta';
+import { dateToMs } from './../utils/mobile';
 // index, create, store, show, edit, update, destroy
 
 class UsuarioController {
   async index(req: Request, res: Response): Promise<Response> {
     const { page = 1, limit = 10, homologada } = req.query
-    const id_usuario = req.user.id_usuario
+    const usuario = req.user
 
-    const [pastas, total] = await PastaRepository.pastas(page, limit, homologada)
-    for await (const pasta of pastas) {
-      const voto = await UsuarioAvaliaPasta.findOne({ id_usuario, id_pasta: pasta.id_pasta })
-      pasta.avaliacao = voto ? voto.avaliacao : null
-    }
+    const [pastas, total] = await PastaRepository.pastas(usuario, page, limit, homologada)
 
-    return res.status(200).json({ pastas, total })
+
+    const _pastas = pastas.map(p => ({
+      ...p,
+      avaliacao: p.avaliacoes[0]?.avaliacao
+    }))
+
+    return res.status(200).json({ pastas: _pastas, total })
   }
 
   async show(req: Request, res: Response): Promise<Response> {
     const { id_pasta } = req.params
     const { id_usuario } = req.user
 
-    const pasta = await Pasta.findOne(id_pasta, { relations: ['usuario'] })
-    const voto = await UsuarioAvaliaPasta.findOne({ id_usuario, id_pasta: pasta.id_pasta })
-    pasta.avaliacao = voto ? voto.avaliacao : null
+    const pasta = await PastaRepository.pasta(id_pasta, id_usuario)
 
-    return res.status(200).json({ pasta, imgs: [] })
+    const _pasta = {
+      ...pasta,
+      avaliacao: pasta.avaliacoes[0]?.avaliacao
+    }
+
+    return res.status(200).json({ pasta: _pasta, imgs: [] })
   }
 
   async store(req: Request, res: Response): Promise<Response> {
