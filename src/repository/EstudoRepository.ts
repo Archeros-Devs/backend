@@ -7,7 +7,7 @@ class EstudoRepository {
     const estudos = Estudo
       .createQueryBuilder('estudo')
       .innerJoin("estudo.usuario", "usuario", "usuario.id_usuario = estudo.id_usuario")
-      .select(['estudo.id_mensagem', 'estudo.mensagem', 'estudo.tipo', 'usuario.nome', 'usuario.url_img', 'usuario.tipo_usuario'])
+      .select(['estudo.id_mensagem', 'estudo.id_origem', 'estudo.mensagem', 'estudo.tipo', 'usuario.nome', 'usuario.url_img', 'usuario.tipo_usuario'])
       .where("estudo.id_pasta = :id_pasta", { id_pasta: pasta.id_pasta })
       .skip((page - 1) * limit)
       .take(limit)
