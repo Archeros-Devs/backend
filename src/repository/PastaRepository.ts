@@ -8,7 +8,7 @@ class PastasRepository {
     const pastas = Pasta
       .createQueryBuilder('pasta')
       .innerJoinAndMapOne("pasta.usuario", "pasta.usuario", "usuario")
-      .innerJoinAndSelect("pasta.avaliacoes", "pasta.avaliacoes", "pasta.avaliacoes.id_usuario = :id_usuario AND pasta.avaliacoes.id_pasta = pasta.id_pasta", { id_usuario: usuario.id_usuario })
+      .leftJoinAndSelect("pasta.avaliacoes", "pasta.avaliacoes", "pasta.avaliacoes.id_usuario = :id_usuario AND pasta.avaliacoes.id_pasta = pasta.id_pasta", { id_usuario: usuario.id_usuario })
       .skip((page - 1) * limit)
       .take(limit)
       .where('pasta.deletado_em IS NULL')
@@ -22,7 +22,7 @@ class PastasRepository {
     const pastas = Pasta
       .createQueryBuilder('pasta')
       .innerJoinAndMapOne("pasta.usuario", "pasta.usuario", "usuario")
-      .innerJoinAndSelect("pasta.avaliacoes", "pasta.avaliacoes", "pasta.avaliacoes.id_usuario = :id_usuario AND pasta.avaliacoes.id_pasta = pasta.id_pasta", { id_usuario })
+      .leftJoinAndSelect("pasta.avaliacoes", "pasta.avaliacoes", "pasta.avaliacoes.id_usuario = :id_usuario AND pasta.avaliacoes.id_pasta = pasta.id_pasta", { id_usuario })
       .where('pasta.id_pasta = :id_pasta', { id_pasta })
       .where('pasta.deletado_em IS NULL')
     return pastas.getOne()
