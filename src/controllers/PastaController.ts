@@ -18,7 +18,7 @@ class UsuarioController {
 
     const _pastas = pastas.map(p => ({
       ...p,
-      avaliacao: p.avaliacoes[0]?.avaliacao
+      avaliacao: p.avaliacoes[0]?.avaliacao || null
     }))
 
     return res.status(200).json({ pastas: _pastas, total })
@@ -32,7 +32,7 @@ class UsuarioController {
 
     const _pasta = {
       ...pasta,
-      avaliacao: pasta.avaliacoes[0]?.avaliacao
+      avaliacao: pasta.avaliacoes[0]?.avaliacao || null
     }
 
     return res.status(200).json({ pasta: _pasta, imgs: [] })
