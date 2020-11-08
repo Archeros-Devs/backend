@@ -14,6 +14,8 @@ import AdministradoresController from '@controllers/AdministradoresController';
 import UsuarioController from '@controllers/UsuarioController';
 import EstudoController from '@controllers/EstudoController';
 import EstudoValidators from '@validators/EstudoValidators';
+import CrudController from '@controllers/CrudController';
+import Cidade from '@entity/Cidade';
 
 const upload = multer(multerConfig);
 const router = Router();
@@ -24,6 +26,7 @@ router.post('/login', AuthController.login);
 router.get('/profissoes', ProfissoesController.index);
 router.get('/categorias', CategoriasController.index);
 router.get('/escolaridades', EscolaridadesController.index);
+router.get('/cidades', CrudController.index(Cidade));
 
 router.post('/usuarios', UsuarioValidator.cadastro, UsuarioController.create);
 router.get('/usuarios', authAdmin, UsuarioController.index);
