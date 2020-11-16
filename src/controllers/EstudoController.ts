@@ -20,7 +20,7 @@ class EstudoController {
   async store(req: Request, res: Response): Promise<Response> {
     const usuario = req.user
     const { id_pasta } = req.params
-    const { mensagem, id_origem } = req.body
+    const { mensagem, lat, long, id_origem } = req.body
 
     const pasta = await Pasta.findOne(id_pasta)
     if (!pasta) return res.status(404).json({ error: 'Pasta não encontrada' })
@@ -30,6 +30,8 @@ class EstudoController {
     estudo.pasta = pasta
     estudo.mensagem = mensagem
     estudo.tipo = TIPO_ESTUDO
+    estudo.lat = lat
+    estudo.long = long
     estudo.id_origem = id_origem
     
     estudo.piii()

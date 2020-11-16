@@ -37,6 +37,12 @@ export default class Estudo extends BaseEntity {
   @Column("varchar", { length: 255 })
   mensagem: string;
 
+  @Column("float")
+  long: number
+
+  @Column("float")
+  lat: number
+
   @CreateDateColumn()
   criado_em: Date;
 
