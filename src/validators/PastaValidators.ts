@@ -40,6 +40,12 @@ class PastaValidators {
         .label('Categorias')
         .of(number()
           .min(1))
+        .notRequired(),
+      lat: number()
+        .label('Latitude')
+        .notRequired(),
+      long: number()
+        .label('Longitude')
         .notRequired()
     })
 

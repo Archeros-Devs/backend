@@ -9,12 +9,6 @@ class EstudoValidators {
         .label('Mensagem')
         .max(255)
         .required(),
-      lat: number()
-        .label('Latitude')
-        .notRequired(),
-      long: number()
-        .label('Longitude')
-        .notRequired()
     })
 
     await body.validate(req.body, { abortEarly: false })

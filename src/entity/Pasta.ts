@@ -44,6 +44,12 @@ export default class Pasta extends BaseEntity {
   @Column("varchar", { length: 300 })
   localizacao: string;
 
+  @Column("float")
+  long: number
+
+  @Column("float")
+  lat: number
+
   @Column("timestamp", { nullable: true })
   private homologada_em: Date | null
   getDataHomologacao = () => this.homologada_em
