@@ -45,10 +45,10 @@ export default class Pasta extends BaseEntity {
   localizacao: string;
 
   @Column("float")
-  long: number
+  longitude: number
 
   @Column("float")
-  lat: number
+  latitude: number
 
   @Column("timestamp", { nullable: true })
   private homologada_em: Date | null

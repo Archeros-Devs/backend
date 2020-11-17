@@ -41,10 +41,10 @@ class PastaValidators {
         .of(number()
           .min(1))
         .notRequired(),
-      lat: number()
+      latitude: number()
         .label('Latitude')
         .notRequired(),
-      long: number()
+      longitude: number()
         .label('Longitude')
         .notRequired()
     })

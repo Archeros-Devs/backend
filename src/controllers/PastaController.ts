@@ -40,7 +40,7 @@ class UsuarioController {
 
   async store(req: Request, res: Response): Promise<Response> {
     const usuario = req.user
-    const { nome, descricao, discussao, localizacao, categorias, lat, long, id_origem } = req.body
+    const { nome, descricao, discussao, localizacao, categorias, latitude, longitude, id_origem } = req.body
     const pasta = new Pasta()
 
     pasta.usuario = usuario
@@ -48,8 +48,8 @@ class UsuarioController {
     pasta.descricao = descricao
     pasta.discussao = discussao
     pasta.localizacao = localizacao
-    pasta.lat = lat
-    pasta.long = long
+    pasta.latitude = latitude
+    pasta.longitude = longitude
     pasta.id_origem = id_origem
     pasta.categorias = await Categoria.findByIds(categorias)
     await pasta.save()
