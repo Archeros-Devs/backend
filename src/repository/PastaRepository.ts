@@ -24,7 +24,7 @@ class PastasRepository {
       .innerJoinAndMapOne("pasta.usuario", "pasta.usuario", "usuario")
       .leftJoinAndSelect("pasta.avaliacoes", "pasta.avaliacoes", "pasta.avaliacoes.id_usuario = :id_usuario AND pasta.avaliacoes.id_pasta = pasta.id_pasta", { id_usuario })
       .where('pasta.id_pasta = :id_pasta', { id_pasta })
-      .where('pasta.deletado_em IS NULL')
+      .andWhere('pasta.deletado_em IS NULL')
     return pastas.getOne()
   }
 }
