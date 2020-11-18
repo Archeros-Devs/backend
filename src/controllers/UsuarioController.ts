@@ -7,6 +7,7 @@ import Escolaridade from '@entity/Escolaridade'
 import Endereco from '@entity/Endereco'
 import { strip as removerMascaraCpf } from '../utils/cpf'
 import argon2 from 'argon2'
+import dayjs from 'dayjs'
 /* index, create, store, show, edit, update, destroy */
 
 class UsuarioController {
@@ -52,6 +53,17 @@ class UsuarioController {
     const usuario = await Usuario.findOne(id_usuario, {
       relations: ['enderecos', 'profissao', 'escolaridade', 'seguindo', 'pastas']
     })
+    return res.status(200).json(usuario)
+  }
+
+  async banir(req: Request, res: Response): Promise<Response> {
+    let { id_usuario } = req.params
+    const { dias } = req.body
+    const usuario = await Usuario.findOne(id_usuario)
+    
+    usuario.banido_ate = dayjs().add(dias, 'day').toDate()
+    await usuario.save()
+
     return res.status(200).json(usuario)
   }
 }

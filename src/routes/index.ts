@@ -31,6 +31,7 @@ router.get('/cidades', CrudController.index(Cidade));
 router.post('/usuarios', UsuarioValidator.cadastro, UsuarioController.create);
 router.get('/usuarios', authAdmin, UsuarioController.index);
 router.get('/usuarios/:id_usuario', authUser, UsuarioController.show)
+router.delete('/usuarios/:id_usuario', authAdmin, UsuarioController.banir)
 router.get('/administradores', authAdmin, AdministradoresController.index);
 
 router.get('/pastas', authUser, PastaController.index);

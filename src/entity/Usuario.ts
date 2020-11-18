@@ -10,6 +10,7 @@ import {
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
+  Timestamp,
 } from "typeorm";
 import Arquivos from "./Arquivos";
 import Endereco from "./Endereco";
@@ -58,6 +59,9 @@ export default class Usuario extends BaseEntity {
     default: () => "'0'",
   })
   tipo_usuario: number;
+
+  @Column("date", { nullable: true })
+  banido_ate: Date | null
 
   @CreateDateColumn()
   criado_em: Date;
