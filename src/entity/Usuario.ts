@@ -21,6 +21,7 @@ import Escolaridade from "./Escolaridade";
 import Profissoes from "./Profissoes";
 import UsuarioAvaliaPasta from "./UsuarioAvaliaPasta";
 import UsuarioSeguePasta from "./UsuarioSeguePasta";
+import Banimento from "./Banimentos";
 @Entity("usuario")
 export default class Usuario extends BaseEntity {
   @PrimaryGeneratedColumn({ type: "int", name: "id_usuario" })

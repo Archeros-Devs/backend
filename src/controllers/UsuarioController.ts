@@ -8,6 +8,7 @@ import Endereco from '@entity/Endereco'
 import { strip as removerMascaraCpf } from '../utils/cpf'
 import argon2 from 'argon2'
 import dayjs from 'dayjs'
+import Banimento from './../entity/Banimentos';
 /* index, create, store, show, edit, update, destroy */
 
 class UsuarioController {
@@ -57,12 +58,21 @@ class UsuarioController {
   }
 
   async banir(req: Request, res: Response): Promise<Response> {
-    let { id_usuario } = req.params
-    const { dias } = req.body
+    const { id_usuario } = req.params
+    const { dias, motivo } = req.body
+
     const usuario = await Usuario.findOne(id_usuario)
+    if (usuario.tipo_usuario !== 0) throw new AppError(401, "Usuário é um administrador")
     
     usuario.banido_ate = dayjs().add(dias, 'day').toDate()
     await usuario.save()
+
+    const banimento = new Banimento()
+    banimento.id_usuario = parseInt(id_usuario)
+    banimento.id_administrador = req.user.id_usuario
+    banimento.motivo = motivo
+    banimento.dias = dias
+    await banimento.save()
 
     return res.status(200).json(usuario)
   }
