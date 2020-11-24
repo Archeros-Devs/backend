@@ -18,6 +18,7 @@ class UsuarioController {
 
     const _pastas = pastas.map(p => ({
       ...p,
+      criador: p.usuario.nome,
       avaliacao: p.avaliacoes[0]?.avaliacao || null
     }))
 
@@ -32,6 +33,7 @@ class UsuarioController {
 
     const _pasta = {
       ...pasta,
+      criador: pasta.usuario.nome,
       avaliacao: pasta.avaliacoes[0]?.avaliacao || null
     }
 
